@@ -16,7 +16,7 @@ class FunctionalTests(unittest.TestCase):
 		options.add_argument('--headless')
 		options.add_argument('--no-sandbox')
 		options.add_argument('--disable-dev-shm-usage')
-		driver = webdriver.Chrome(service=service, options=chrome_options)
+		driver = webdriver.Chrome(service=service, options=options)
 		
 
 	"""
