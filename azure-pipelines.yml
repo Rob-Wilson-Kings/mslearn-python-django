@@ -99,11 +99,11 @@ stages:
             displayName: 'Use Python version'
 
           - script: |
-                pip install pytest-django
-                cd django-basic/azuredemo
-                pytest --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
+              pip install selenium
+              pip install pytest
+              pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
             workingDirectory: $(Pipeline.Workspace)
-            displayName: 'Run tests'
+            displayName: 'Run functional tests'
           
           - task: PublishTestResults@2
             inputs: 
