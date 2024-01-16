@@ -67,12 +67,11 @@ stages:
       pytest Tests/unit_tests --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-unit.xml
       pip install pycmd
       py.cleanup Tests/
-      
 
-    - task: PublishTestResults@2
+     - task: PublishTestResults@2
       inputs:        
-        searchFolder: $(System.DefaultWorkingDirectory)
-        testResultsFiles: '**/test-*.xml'
+      searchFolder: $(System.DefaultWorkingDirectory)
+      testResultsFiles: '**/test-*.xml'
       displayName: 'Publish test results'
 
     - publish: $(System.DefaultWorkingDirectory)/Tests
@@ -105,17 +104,17 @@ stages:
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
             
-    - script: |
-        pip install selenium
-        pip install pytest
-        pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
-        workingDirectory: $(Pipeline.Workspace)
-        displayName: 'Run functional tests'
+          - script: |
+            pip install selenium
+            pip install pytest
+            pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
+             workingDirectory: $(Pipeline.Workspace)
+            displayName: 'Run functional tests'
 
-   - task: PublishTestResults@2
-        inputs:
-          searchFolder: $(Pipeline.Workspace)
-        testResultsFiles: '**/test-*.xml'
-        displayName: 'Publish test results'
+          - task: PublishTestResults@2
+            inputs:
+            searchFolder: $(Pipeline.Workspace)
+            testResultsFiles: '**/test-*.xml'
+            displayName: 'Publish test results'
 
           
