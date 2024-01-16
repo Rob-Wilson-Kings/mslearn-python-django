@@ -114,8 +114,8 @@ stages:
 
           - task: PublishTestResults@2
             inputs:
-            searchFolder: $(Pipeline.Workspace)
-            testResultsFiles: '**/test-*.xml'
+              searchFolder: $(Pipeline.Workspace)
+              testResultsFiles: '**/test-*.xml'
             displayName: 'Publish test results'
 
           
