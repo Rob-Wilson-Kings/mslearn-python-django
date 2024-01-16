@@ -101,7 +101,8 @@ stages:
           - script: |
                 pip install pytest-django
                 cd django-basic/azuredemo
-                pytest --junitxml=../../reports/django-basic.xml
+                pytest --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
+            workingDirectory: $(Pipeline.Workspace)
             displayName: 'Run tests'
           
           - task: PublishTestResults@2
