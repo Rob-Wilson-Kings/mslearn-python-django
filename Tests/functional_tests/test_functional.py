@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 import unittest
 import os
 import sys
@@ -11,11 +10,10 @@ import argparse
 class FunctionalTests(unittest.TestCase):
 
 	def setUp(self):
-		service = Service(executable_path=r'/usr/bin/chromedriver.exe')
 		options = webdriver.ChromeOptions()
-		options.add_argument('--headless')
-		options.add_argument('--disable-dev-shm-usage')
-		self.driver = webdriver.Chrome(os.path.join(os.environ["CHROMEWEBDRIVER"], 'chromedriver'), options=options)
+		options.add_argument('--no-sandbox')
+		self.driver = webdriver.Chrome(os.path.join(os.environ["ChromeWebDriver"], 'chromedriver.exe'), chrome_options=options)
+
 		
 
 	"""
