@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 import unittest
 import os
 import sys
@@ -9,10 +10,13 @@ import argparse
 class FunctionalTests(unittest.TestCase):
 
 	def setUp(self):
+		service = Service(executable_path=r'/usr/bin/chromedriver')
 		options = webdriver.ChromeOptions()
 		options.add_argument('--headless')
+		options.add_argument('--no-sandbox')
 		options.add_argument('--disable-dev-shm-usage')
-		self.driver = webdriver.Chrome(os.path.join(os.environ["CHROMEWEBDRIVER"], 'chromedriver'), options=options)
+		driver = webdriver.Chrome(service=service, options=options)
+		
 
 	"""
 	The current time taken by the webapp to refresh after deployment is a considerable amount and the selenium tests
