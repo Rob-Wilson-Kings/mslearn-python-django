@@ -4,8 +4,6 @@ import unittest
 import os
 import sys
 import pytest
-import argparse 
-
 
 class FunctionalTests(unittest.TestCase):
 
@@ -14,8 +12,6 @@ class FunctionalTests(unittest.TestCase):
 		options.add_argument('--no-sandbox')
 		self.driver = webdriver.Chrome(os.path.join(os.environ["ChromeWebDriver"], 'chromedriver.exe'), chrome_options=options)
 
-		
-
 	"""
 	The current time taken by the webapp to refresh after deployment is a considerable amount and the selenium tests
 	in the release run much faster than this duration, hence the tests do not assert the current deployed app but from
@@ -23,12 +19,9 @@ class FunctionalTests(unittest.TestCase):
 	around the title assertion which is a temporary solution until the webapp deployment refresh times are fixed.
 	"""
 	def test_selenium(self):
-		parser = argparse.ArgumentParser()
-		parser.add_argument('--webAppUrl')
-		results, unknown = parser.parse_known_args()
-
 		try:
-			response = self.driver.get(results.webAppUrl)
+			webAppUrl = pytest.config.getoption('webAppUrl')
+			response = self.driver.get(webAppUrl)
 			title = self.driver.title
 			self.assertIn("Home Page - Python Django Application", title)
 		except AssertionError:
