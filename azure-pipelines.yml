@@ -1,4 +1,4 @@
-# Python to Linux Web App on Azure
+ # Python to Linux Web App on Azure
 # Build your Python project and deploy it to Azure as a Linux Web App.
 # Change python version to one thats appropriate for your application.
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
@@ -98,24 +98,16 @@ stages:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
 
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : python-cicd-21997'
-            inputs:
-              azureSubscription: $(azureServiceConnectionId)
-              appName: $(webAppName)
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-
           - script: |
-              pip install selenium
-              pip install pytest
-              pytest tests/functional_tests/ --webAppUrl=https://$(webAppName).azurewebsites.net --junitxml=$(System.DefaultWorkingDirectory)/TestResults/test-results-functional.xml
-            workingDirectory: $(Pipeline.Workspace)
-            displayName: 'Run functional tests'
-
-          - task: PublishTestResults@2
-            inputs:
-              searchFolder: $(Pipeline.Workspace)
-              testResultsFiles: '**/test-*.xml'
-            displayName: 'Publish test results'
-
+                pip install pytest-django
+                cd django-basic/azuredemo
+                pytest --junitxml=../../reports/django-basic.xml
+            displayName: 'Run tests'
           
+          - task: PublishTestResults@2
+            inputs: 
+                  testResultsFiles: 'reports/django-basic.xml'
+                  testRunTitle: '$(Agent.OS) - $(Build.DefinitionName) - Python $(python.version)'
+            condition: succeededOrFailed()
+
+         
