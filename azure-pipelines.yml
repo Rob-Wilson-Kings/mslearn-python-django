@@ -71,8 +71,8 @@ stages:
 
     - task: PublishTestResults@2
       inputs:        
-      searchFolder: $(System.DefaultWorkingDirectory)
-      testResultsFiles: '**/test-*.xml'
+        searchFolder: $(System.DefaultWorkingDirectory)
+        testResultsFiles: '**/test-*.xml'
       displayName: 'Publish test results'
 
     - publish: $(System.DefaultWorkingDirectory)/Tests
